@@ -1,4 +1,4 @@
-package crackRSATool;
+package com.rsa.tool;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -228,11 +228,13 @@ public class Maintool {
 			}
 		}
 
+		
 		private static boolean isDivOnPrimeList(BigInteger divide, List<BigInteger> primeList) {
 			return primeList.contains(divide);
 		}
 
-		public static List<BigInteger> primeNumbersBruteForce(BigInteger n) {
+		
+		private static List<BigInteger> primeNumbersBruteForce(BigInteger n) {
 			List<BigInteger> primeNumbers = new ArrayList();
 			for (BigInteger i = new BigInteger("2"); i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {
 				if (isPrimeBruteForce(i)) {
@@ -242,7 +244,7 @@ public class Maintool {
 			return primeNumbers;
 		}
 
-		public static boolean isPrimeBruteForce(BigInteger number) {
+		private static boolean isPrimeBruteForce(BigInteger number) {
 			for (BigInteger i = new BigInteger("2"); i.compareTo(number) < 0; i = i.add(BigInteger.ONE)) {
 				if (number.mod(i).compareTo(BigInteger.ZERO) == 0) {
 					return false;
@@ -251,6 +253,11 @@ public class Maintool {
 			return true;
 		}
 
+		
+		/****
+		 * Stack overflow if recursive process > 3 or 4 K
+		 * 
+		 * *****/
 		private static List<BigInteger> primerNumberBruteForceRecursive(List<BigInteger> list, BigInteger n, BigInteger i) {
 			if (isPrimeRecursive(i, new BigInteger("2"))) {
 				list.add(i);
