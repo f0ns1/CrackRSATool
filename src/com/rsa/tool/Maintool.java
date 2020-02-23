@@ -15,7 +15,7 @@ public class Maintool {
 	private static final String MODE_ENCRYPT = "ENCRYPT";
 	private static final String MODE_CRACK = "CRACK";
 	private static  int MAX_THREADS;
-
+	private static String trace="10000";
 
 		public static void main(String[] args) {
 			System.out.println("=======================================================");
@@ -23,12 +23,12 @@ public class Maintool {
 			System.out.println("=======================================================");
 			String modulus = "48789828618640905340268650455641742611513932500406667";
 			modulus = args[0];
-
+			trace =args[2];
 			BigInteger m = new BigInteger(modulus);
 			System.out.println("Break module : " + modulus);
 			System.out.println("module length : " + modulus.length());
 
-			 List<BigInteger> primeList = primeNumbersBruteForce(m);
+			 List<BigInteger> primeList = primeNumbersBruteForce(m, trace);
 			// List<BigInteger> primeList = null;
 			BigInteger it = new BigInteger("2");
 			List<BigInteger> primeListVoid = new ArrayList<>();
@@ -234,11 +234,18 @@ public class Maintool {
 		}
 
 		
-		private static List<BigInteger> primeNumbersBruteForce(BigInteger n) {
+		private static List<BigInteger> primeNumbersBruteForce(BigInteger n,String traceLength) {
 			List<BigInteger> primeNumbers = new ArrayList();
+			BigInteger process = new BigInteger("0");
+			BigInteger trace = new BigInteger(traceLength);
 			for (BigInteger i = new BigInteger("2"); i.compareTo(n) < 0; i = i.add(BigInteger.ONE)) {
 				if (isPrimeBruteForce(i)) {
 					primeNumbers.add(i);
+					process=process.add(BigInteger.ONE);
+					if(process.compareTo(trace) == 0) {
+						System.out.println("Working Process ......... : Numnber of primes found = "+primeNumbers.size()+" Iterate status  ["+i+"] of ["+n+"]");
+						process= BigInteger.ZERO;
+					}
 				}
 			}
 			return primeNumbers;
